@@ -10,22 +10,10 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-
-  <script>
-  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
-  daovoice('init', {
-      app_id: "6aef1e93"
-    });
-  daovoice('update');
-  </script>
-
-
 <link rel="stylesheet" href="/css/main.css">
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
-  <script src="/lib/pace/pace.min.js"></script>
 
 
 <script id="hexo-configurations">
@@ -52,7 +40,7 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
     path: './public/search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
   };
@@ -170,37 +158,12 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">2</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">3</span></a>
 
   </li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
-        </a>
-      </li>
   </ul>
 
 </nav>
-  <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
-           placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
-  </div>
-  <span class="popup-btn-close">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div id="search-result"></div>
-
-</div>
-<div class="search-pop-overlay"></div>
-
-  </div>
 </div>
     </header>
 
@@ -271,17 +234,19 @@
               </span>
               <span class="post-meta-item-text">阅读次数：</span>
               <span id="busuanzi_value_page_pv"></span>
-            </span>
+            </span><br>
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-file-word-o"></i>
               </span>
+                <span class="post-meta-item-text">本文字数：</span>
               <span>4.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
               <span>4 分钟</span>
             </span>
 
@@ -558,6 +523,7 @@
     
     
     
+
 	<div>
 	  
 		<div>
@@ -565,28 +531,9 @@
         <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
     
 </div>
+
 	  
 	</div>
-        <div class="reward-container">
-  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
-  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    打赏
-  </button>
-  <div id="qr" style="display: none;">
-      
-      <div style="display: inline-block;">
-        <img src="/images/wechatpay.jpg" alt="Liu JT 微信支付">
-        <p>微信支付</p>
-      </div>
-      
-      <div style="display: inline-block;">
-        <img src="/images/alipay.jpg" alt="Liu JT 支付宝">
-        <p>支付宝</p>
-      </div>
-
-  </div>
-</div>
-
         
 
 <div>
@@ -619,7 +566,10 @@
     <a href="/2020/01/20/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/" rel="prev" title="新的一年新的开始！">
       <i class="fa fa-chevron-left"></i> 新的一年新的开始！
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/01/26/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="next" title="Java基础（二）">
+      Java基础（二） <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -679,7 +629,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1计算机基础知识"><span class="nav-number">1.1.</span> <span class="nav-text">1.1计算机基础知识</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二章Java语言开发环境"><span class="nav-number">2.</span> <span class="nav-text">第二章Java语言开发环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-Java虚拟机–JVM"><span class="nav-number">2.1.</span> <span class="nav-text">2.1  Java虚拟机–JVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-JRE和JDK"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 JRE和JDK</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三章程序说明"><span class="nav-number">3.</span> <span class="nav-text">第三章程序说明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1编译和运行是两回事"><span class="nav-number">3.1.</span> <span class="nav-text">3.1编译和运行是两回事</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2关于main方法"><span class="nav-number">3.2.</span> <span class="nav-text">3.2关于main方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3关键字keywords"><span class="nav-number">3.3.</span> <span class="nav-text">3.3关键字keywords</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-标识符"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 标识符</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四章变量和数据类型"><span class="nav-number">4.</span> <span class="nav-text">第四章变量和数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1数据类型"><span class="nav-number">4.1.</span> <span class="nav-text">5.1数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java的数据类型分为两大类"><span class="nav-number">4.1.1.</span> <span class="nav-text">Java的数据类型分为两大类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本数据类型"><span class="nav-number">4.1.2.</span> <span class="nav-text">基本数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#四类八种基本数据类型"><span class="nav-number">4.1.2.1.</span> <span class="nav-text">四类八种基本数据类型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2变量的定义"><span class="nav-number">4.2.</span> <span class="nav-text">5.2变量的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3注意事项"><span class="nav-number">4.3.</span> <span class="nav-text">5.3注意事项</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第五章-方法"><span class="nav-number">5.</span> <span class="nav-text">第五章 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-概述"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2方法的定义"><span class="nav-number">5.2.</span> <span class="nav-text">5.2方法的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3方法的调用"><span class="nav-number">5.3.</span> <span class="nav-text">5.3方法的调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4调用方法的三种形式"><span class="nav-number">5.4.</span> <span class="nav-text">5.4调用方法的三种形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-5方法重载"><span class="nav-number">5.5.</span> <span class="nav-text">5.5方法重载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2循环语句–while"><span class="nav-number">5.6.</span> <span class="nav-text">6.2循环语句–while</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3循环语句–do…while"><span class="nav-number">5.7.</span> <span class="nav-text">6.3循环语句–do…while</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-4循环语句的区别"><span class="nav-number">5.8.</span> <span class="nav-text">6.4循环语句的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-5跳出语句"><span class="nav-number">5.9.</span> <span class="nav-text">6.5跳出语句</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第7章数组"><span class="nav-number">6.</span> <span class="nav-text">第7章数组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1数组定义和访问"><span class="nav-number">6.1.</span> <span class="nav-text">7.1数组定义和访问</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-1容器概述"><span class="nav-number">6.1.1.</span> <span class="nav-text">7.1.1容器概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-2数组的概念"><span class="nav-number">6.1.2.</span> <span class="nav-text">7.1.2数组的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-3数组的定义"><span class="nav-number">6.1.3.</span> <span class="nav-text">7.1.3数组的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-4-数组的访问"><span class="nav-number">6.1.4.</span> <span class="nav-text">7.1.4 数组的访问</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2数组原理内存"><span class="nav-number">6.2.</span> <span class="nav-text">7.2数组原理内存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-1内存概述"><span class="nav-number">6.2.1.</span> <span class="nav-text">7.2.1内存概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-2Java虚拟机的内存划分"><span class="nav-number">6.2.2.</span> <span class="nav-text">7.2.2Java虚拟机的内存划分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-3数组的常见操作"><span class="nav-number">6.2.3.</span> <span class="nav-text">7.2.3数组的常见操作</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1计算机基础知识"><span class="nav-text">1.1计算机基础知识</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二章Java语言开发环境"><span class="nav-text">第二章Java语言开发环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-Java虚拟机–JVM"><span class="nav-text">2.1  Java虚拟机–JVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-JRE和JDK"><span class="nav-text">2.2 JRE和JDK</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三章程序说明"><span class="nav-text">第三章程序说明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1编译和运行是两回事"><span class="nav-text">3.1编译和运行是两回事</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2关于main方法"><span class="nav-text">3.2关于main方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3关键字keywords"><span class="nav-text">3.3关键字keywords</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-标识符"><span class="nav-text">3.4 标识符</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四章变量和数据类型"><span class="nav-text">第四章变量和数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1数据类型"><span class="nav-text">5.1数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java的数据类型分为两大类"><span class="nav-text">Java的数据类型分为两大类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本数据类型"><span class="nav-text">基本数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#四类八种基本数据类型"><span class="nav-text">四类八种基本数据类型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2变量的定义"><span class="nav-text">5.2变量的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3注意事项"><span class="nav-text">5.3注意事项</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第五章-方法"><span class="nav-text">第五章 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-概述"><span class="nav-text">5.1 概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2方法的定义"><span class="nav-text">5.2方法的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3方法的调用"><span class="nav-text">5.3方法的调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4调用方法的三种形式"><span class="nav-text">5.4调用方法的三种形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-5方法重载"><span class="nav-text">5.5方法重载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2循环语句–while"><span class="nav-text">6.2循环语句–while</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3循环语句–do…while"><span class="nav-text">6.3循环语句–do…while</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-4循环语句的区别"><span class="nav-text">6.4循环语句的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-5跳出语句"><span class="nav-text">6.5跳出语句</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第7章数组"><span class="nav-text">第7章数组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1数组定义和访问"><span class="nav-text">7.1数组定义和访问</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-1容器概述"><span class="nav-text">7.1.1容器概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-2数组的概念"><span class="nav-text">7.1.2数组的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-3数组的定义"><span class="nav-text">7.1.3数组的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-4-数组的访问"><span class="nav-text">7.1.4 数组的访问</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2数组原理内存"><span class="nav-text">7.2数组原理内存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-1内存概述"><span class="nav-text">7.2.1内存概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-2Java虚拟机的内存划分"><span class="nav-text">7.2.2Java虚拟机的内存划分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-3数组的常见操作"><span class="nav-text">7.2.3数组的常见操作</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -695,7 +645,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -714,7 +664,7 @@
         <a href="https://github.com/lxtbiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lxtbiu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://blog.csdn.net/qq_42617575" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_42617575" rel="noopener" target="_blank"><i class="fa fa-fw fa-crosshairs"></i>CSDN</a>
+        <a href="/lxtbiu123@gmail.com" title="E-Mail → lxtbiu123@gmail.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
       </span>
       <span class="links-of-author-item">
         <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i>RSS</a>
@@ -739,32 +689,20 @@
     <footer class="footer">
       <div class="footer-inner">
         
-<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="powered-by">
-<i class="fa fa-user-md"></i><span id="busuanzi_container_site_pv">
-    本站总访问量<span id="busuanzi_value_site_pv"></span>次
-</span>
-</div>
+
 <div class="copyright">
   
   &copy; 2019 – 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">柳小涛</span>
-
-  {<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-  
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    
-	<span title="post.totalcount">
-     2.8k字 </span>
-    <!--<span title="站点总字数">4k</span>-->
-  
+    <span title="站点总字数">4k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
@@ -830,10 +768,6 @@
 
 
 
-  
-<script src="/js/local-search.js"></script>
-
-
 
 
 
@@ -852,4 +786,5 @@
 </body>
 </html>
 <!-- 页面点击小红心 -->
-<script type="text/javascript" src="/js/clicklove.js"></script>
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
+

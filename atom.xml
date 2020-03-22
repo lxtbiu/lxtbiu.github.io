@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-03-12T06:15:06.082Z</updated>
+  <updated>2020-03-22T07:18:31.028Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,52 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>为什么要重写hashcode和equals方法</title>
+    <link href="http://yoursite.com/2020/03/22/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E9%87%8D%E5%86%99hashcode%E5%92%8Cequalsd%E6%96%B9%E6%B3%95/"/>
+    <id>http://yoursite.com/2020/03/22/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E9%87%8D%E5%86%99hashcode%E5%92%8Cequalsd%E6%96%B9%E6%B3%95/</id>
+    <published>2020-03-22T06:28:21.000Z</published>
+    <updated>2020-03-22T07:18:31.028Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p> 本篇博客记录了为什么要重写hashcode方法和equals方法。</p> <a id="more"></a><h1 id="一、为什么要重写hashcode和equals方法"><a href="#一、为什么要重写hashcode和equals方法" class="headerlink" title="一、为什么要重写hashcode和equals方法"></a>一、为什么要重写hashcode和equals方法</h1><h2 id="如果不被重写（原生）的hashCode和equals是什么样的？"><a href="#如果不被重写（原生）的hashCode和equals是什么样的？" class="headerlink" title="如果不被重写（原生）的hashCode和equals是什么样的？"></a><strong>如果不被重写（原生）的hashCode和equals是什么样的？</strong></h2><ol><li>没有重写hashcode和equals方法时，使用的是object父类的方法。</li><li>不被重写（原生）的hashCode值是根据<strong>内存地址</strong>换算出来的一个值。</li><li>不被重写（原生）的equals方法是严格判断一个对象是否相等的方法（object1 == object2）。</li></ol><h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><p><strong>当我们用HashMap存入自定义的类时，如果不重写这个自定义类的equals和hashCode方法，得到的结果会和我们预期的不一样</strong> </p><p><strong>我们创建一个HashMap对象，它的键可以存放key对象，值存放String类型对象；</strong></p><p><strong>首先我们创建2个key值相同的对象即k1，k2，它们的值都是1，我们通过put方法将k1和一串字符串放入map集合中，然后我们想用k2去HashMap里得到值，就好像我们用k1这把钥匙去关门，用k2这把钥匙去开门，这是符合逻辑的。</strong></p><p><strong>但是，如果没有重写hashcode方法和equals方法，我们得到的值就是为null，为什么呢。</strong></p><p><strong>因为当我们没有重写hashcode方法和equals方法，我们往hashmap存放k1时，首先会调用hashcode方法来计算它的hash值，而没有重写的hashcode方法是根据内存地址换算所得到的一个值</strong></p><p><strong>k1和k2为2个对象他们的地址是不同的。</strong></p><p><strong>但是我们要是重写了hashcode方法和equals方法，hashcode会根据key的值来算出他的hash值，因为k1和k2的值都是1，所以它们的哈希值是相等的，而equals方法来判断两者是否相等。</strong></p><h2 id="equals的几个特性"><a href="#equals的几个特性" class="headerlink" title="equals的几个特性"></a>equals的几个特性</h2><p><strong>1.自反性：x.equals(x) == true,自己和自己比较相等</strong></p><p><strong>2.对称性：x.equals(y) == y.equals(x),两个对象调用equals的的结果应该一样</strong></p><p><strong>3.传递性：如果x.equals(y) == true y.equals(z) == true 则 x.equals(z) == true,x和y相等，y和z相等，则x和z相等</strong></p><p><strong>4.一致性 : 如果x对象和y对象有成员变量num1和num2，其中重写的equals方法只有num1参加了运算，则修改num2不影响x.equals(y)的值</strong></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt; 本篇博客记录了为什么要重写hashcode方法和equals方法。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="HashMap" scheme="http://yoursite.com/categories/HashMap/"/>
+    
+    
+      <category term="HashMap" scheme="http://yoursite.com/tags/HashMap/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HashMap的负载因子为什么默认是0.75?</title>
+    <link href="http://yoursite.com/2020/03/22/HashMap%E7%9A%84%E8%B4%9F%E8%BD%BD%E5%9B%A0%E5%AD%90%E4%B8%BA%E4%BB%80%E4%B9%88%E9%BB%98%E8%AE%A4%E6%98%AF0-75/"/>
+    <id>http://yoursite.com/2020/03/22/HashMap%E7%9A%84%E8%B4%9F%E8%BD%BD%E5%9B%A0%E5%AD%90%E4%B8%BA%E4%BB%80%E4%B9%88%E9%BB%98%E8%AE%A4%E6%98%AF0-75/</id>
+    <published>2020-03-22T06:26:42.000Z</published>
+    <updated>2020-03-22T06:45:43.437Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本篇博客记录了—HashMap的负载因子为什么默认是0.75 ?</p>  <a id="more"></a><h1 id="一、负载因子的作用"><a href="#一、负载因子的作用" class="headerlink" title="一、负载因子的作用"></a>一、负载因子的作用</h1><p><strong>负载因子是和扩容机制有关的，意思是如果当前容器的容量，达到了我们设定的最大值，就要开始执行扩容操作。举个例子来解释</strong></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">比如说当前的容量为<span class="number">16</span>，负载因子是<span class="number">0.75</span>，<span class="number">16</span>*<span class="number">0.75</span>=<span class="number">12</span>，也就是说当容量达到<span class="number">12</span>的时候就会进行扩容。</span><br></pre></td></tr></table></figure><p>  <strong>他的作用很简单，相当于是一个扩容机制的阈值。当超过了这个阈值，就会触发扩容机制</strong> </p><h1 id="二、原因解释"><a href="#二、原因解释" class="headerlink" title="二、原因解释"></a>二、原因解释</h1><p><strong>我们在考虑HashMap的时候，首先要想到的是HashMap只是一个数据结构，既然是数据结构最主要的就是节省时间和空间。负载因子的作用肯定也是节省时间和空间。为什么节省呢？</strong> </p><h2 id="1、负载因子是1-0"><a href="#1、负载因子是1-0" class="headerlink" title="1、负载因子是1.0"></a>1、负载因子是1.0</h2><p>我们的数据一开始是保存在数组里面的，当发生了Hash碰撞的时候，就是在这个数据节点上，生出一个链表，当链表长度达到一定长度的时候，就会把链表转化为红黑树。</p><p><strong>当负载因子是1.0的时候，也就意味着，只有当数组的8个值全部填充了，才会发生扩容。这就带来了很大的问题，因为Hash冲突时避免不了的。当负载因子是1.0的时候，意味着会出现大量的Hash的冲突，底层的红黑树变得异常复杂。对于查询效率极其不利。这种情况就是牺牲了时间来保证空间的利用率。</strong></p><p><strong>因此一句话总结就是负载因子过大，虽然空间利用率上去了，但是时间效率降低了。</strong></p><h2 id="2、负载因子是0-5"><a href="#2、负载因子是0-5" class="headerlink" title="2、负载因子是0.5"></a>2、负载因子是0.5</h2><p>负载因子是0.5的时候，这也就意味着，当数组中的元素达到了一半就开始扩容，既然填充的元素少了，Hash冲突也会减少，那么底层的链表长度或者是红黑树的高度就会降低。查询效率就会增加。</p><p>但是，兄弟们，这时候空间利用率就会大大的降低，原本存储1M的数据，现在就意味着需要2M的空间。</p><p><strong>一句话总结就是负载因子太小，虽然时间效率提升了，但是空间利用率降低了。</strong></p><h2 id="3、负载因子是0-72"><a href="#3、负载因子是0-72" class="headerlink" title="3、负载因子是0.72"></a>3、负载因子是0.72</h2><p><strong>负载因子是0.75的时候，空间利用率比较高，而且避免了相当多的Hash冲突，使得底层的链表或者是红黑树的高度比较低，提升了空间效率。</strong> </p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;本篇博客记录了—HashMap的负载因子为什么默认是0.75 ?&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="HashMap" scheme="http://yoursite.com/categories/HashMap/"/>
+    
+    
+      <category term="HashMap" scheme="http://yoursite.com/tags/HashMap/"/>
+    
+  </entry>
   
   <entry>
     <title>FastDFS文件上传</title>

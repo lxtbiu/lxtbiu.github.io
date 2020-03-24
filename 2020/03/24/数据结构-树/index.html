@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: './public/search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="前言本篇博客介绍了数据结构—–树结构的应用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构----树">
+<meta property="og:url" content="http://yoursite.com/2020/03/24/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%91/index.html">
+<meta property="og:site_name" content="孤独患者">
+<meta property="og:description" content="前言本篇博客介绍了数据结构—–树结构的应用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5Cblog%5Cpublic%5Cimages%5Cimage%5C1.png">
+<meta property="article:published_time" content="2020-03-24T08:38:46.000Z">
+<meta property="article:modified_time" content="2020-03-24T09:34:24.296Z">
+<meta property="article:author" content="Liu JT">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:%5Cblog%5Cpublic%5Cimages%5Cimage%5C1.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/24/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%91/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>数据结构----树 | 孤独患者</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="孤独患者" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">孤独患者</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">成為一個厲害的普通人</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">8</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">11</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">16</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/lxtbiu" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/24/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.jpg">
+      <meta itemprop="name" content="Liu JT">
+      <meta itemprop="description" content="小人物，普通人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="孤独患者">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据结构----树
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-24 16:38:46 / 修改时间：17:34:24" itemprop="dateCreated datePublished" datetime="2020-03-24T16:38:46+08:00">2020-03-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>本篇博客介绍了数据结构—–树结构的应用</strong></p>
+ <a id="more"></a>
+
+<h1 id="1、二叉树"><a href="#1、二叉树" class="headerlink" title="1、二叉树"></a>1、二叉树</h1><h2 id="1-1-为什么需要树这种结构"><a href="#1-1-为什么需要树这种结构" class="headerlink" title="1.1 为什么需要树这种结构"></a>1.1 为什么需要树这种结构</h2><ol>
+<li><p><strong>数组存储方式的分析</strong></p>
+<p><strong>优点：</strong>通过下标方式访问元素，速度快。<strong>对于有序数组</strong>，还可使用二分查找提高检索速度。<br><strong>缺点：</strong>如果要检索具体某个值，或者插入值(按一定顺序)<strong>会整体移动</strong>，效率较低   </p>
+</li>
+<li><p><strong>链式存储方式的分析</strong></p>
+<p><strong>优点：</strong>在一定程度上对数组存储方式有优化(比如：插入一个数值节点，只需要将插入节点，链接到链表中即可， 删除效率也很好)。<br><strong>缺点：</strong>在进行检索时，效率仍然较低，比如(检索某个值，需要从头节点开始遍历)   </p>
+</li>
+<li><p><strong>树存储方式的分析</strong></p>
+<p>能提高数据<strong>存储，读取</strong>的效率, 比如利用 <strong>二叉排序树</strong>(Binary Sort Tree)，既可以保证数据的检索速度，同时也可以保证数据的插入，删除，修改的速度。  </p>
+</li>
+</ol>
+<h2 id="1-2-二叉树的概念"><a href="#1-2-二叉树的概念" class="headerlink" title="1.2 二叉树的概念"></a>1.2 二叉树的概念</h2><ol>
+<li>树有很多种，每个节点<strong>最多只能有两个子节点</strong>的一种形式称为二叉树。</li>
+<li>二叉树的子节点分为左节点和右节点。</li>
+<li>如果该二叉树的<strong>所有叶子节点都在最后一层</strong>，并且结点总数= 2^n -1 , n 为层数，则我们称为满二叉树  </li>
+<li>如果该二叉树的所有叶子节点都在最后一层或者倒数第二层，而且最后一层的叶子节点在左边连续，倒数第二层的叶子节点在右边连续，我们称为完全二叉树。</li>
+</ol>
+<p><img src="D:%5Cblog%5Cpublic%5Cimages%5Cimage%5C1.png" alt="1"></p>
+<h2 id="1-3-使用前序中序后序遍历二叉树"><a href="#1-3-使用前序中序后序遍历二叉树" class="headerlink" title="1.3 使用前序中序后序遍历二叉树"></a>1.3 使用前序中序后序遍历二叉树</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//编写前序遍历的方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">preOrder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	System.out.println(<span class="keyword">this</span>); <span class="comment">//先输出父结点</span></span><br><span class="line">	<span class="comment">//递归向左子树前序遍历</span></span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">this</span>.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">		<span class="keyword">this</span>.left.preOrder();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//递归向右子树前序遍历</span></span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">this</span>.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">		<span class="keyword">this</span>.right.preOrder();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//中序遍历</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">infixOrder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//递归向左子树中序遍历</span></span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">this</span>.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">		<span class="keyword">this</span>.left.infixOrder();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//输出父结点</span></span><br><span class="line">	System.out.println(<span class="keyword">this</span>);</span><br><span class="line">	<span class="comment">//递归向右子树中序遍历</span></span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">this</span>.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">		<span class="keyword">this</span>.right.infixOrder();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//后序遍历</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postOrder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">this</span>.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">		<span class="keyword">this</span>.left.postOrder();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">this</span>.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">		<span class="keyword">this</span>.right.postOrder();</span><br><span class="line">	&#125;</span><br><span class="line">	System.out.println(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-4-分别使用前序中序后序查找二叉树"><a href="#1-4-分别使用前序中序后序查找二叉树" class="headerlink" title="1.4 分别使用前序中序后序查找二叉树"></a>1.4 分别使用前序中序后序查找二叉树</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//前序遍历查找</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> no 需要查找的编号</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 如果有则返回Node,没有则返回null</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> HeroNode <span class="title">preOrderSearch</span><span class="params">(<span class="keyword">int</span> no)</span></span>&#123;</span><br><span class="line">    <span class="comment">//比较当前结点是不是</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.no == no) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//1.则判断当前结点的左子节点是否为空，如果不为空，则递归前序查找</span></span><br><span class="line">    <span class="comment">//2.如果左递归前序查找，找到结点，则返回</span></span><br><span class="line">    HeroNode resNode = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">        resNode = <span class="keyword">this</span>.left.preOrderSearch(no);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(resNode != <span class="keyword">null</span>) &#123;<span class="comment">//说明我们左子树找到</span></span><br><span class="line">        <span class="keyword">return</span> resNode;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//1.左递归前序查找，找到结点，则返回，否继续判断，</span></span><br><span class="line">    <span class="comment">//2.当前的结点的右子节点是否为空，如果不空，则继续向右递归前序查找</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">        resNode = <span class="keyword">this</span>.right.preOrderSearch(no);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> resNode;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//中序遍历查找</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> HeroNode <span class="title">infixOrderSearch</span><span class="params">(<span class="keyword">int</span> no)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//判断当前结点的左子节点是否为空，如果不为空，则递归中序查找</span></span><br><span class="line">    HeroNode resNode = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">        resNode = <span class="keyword">this</span>.left.infixOrderSearch(no);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(resNode != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> resNode;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//如果找到，则返回，如果没有找到，就和当前结点比较，如果是则返回当前结点</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.no == no) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//否则继续进行右递归的中序查找</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">        resNode = <span class="keyword">this</span>.right.infixOrderSearch(no);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> resNode;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//后序遍历查找</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> HeroNode <span class="title">postOrderSearch</span><span class="params">(<span class="keyword">int</span> no)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//判断当前结点的左子节点是否为空，如果不为空，则递归后序查找</span></span><br><span class="line">    HeroNode resNode = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">        resNode = <span class="keyword">this</span>.left.postOrderSearch(no);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(resNode != <span class="keyword">null</span>) &#123;<span class="comment">//说明在左子树找到</span></span><br><span class="line">        <span class="keyword">return</span> resNode;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//如果左子树没有找到，则向右子树递归进行后序遍历查找</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">        resNode = <span class="keyword">this</span>.right.postOrderSearch(no);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(resNode != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> resNode;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//如果左右子树都没有找到，就比较当前结点是不是</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.no == no) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> resNode;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-5-二叉树-删除节点"><a href="#1-5-二叉树-删除节点" class="headerlink" title="1.5 二叉树-删除节点"></a>1.5 二叉树-删除节点</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//递归删除结点</span></span><br><span class="line">  <span class="comment">//1.如果删除的节点是叶子节点，则删除该节点</span></span><br><span class="line">  <span class="comment">//2.如果删除的节点是非叶子节点，则删除该子树</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delNode</span><span class="params">(<span class="keyword">int</span> no)</span> </span>&#123;</span><br><span class="line">      <span class="comment">//思路</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 	1. 因为我们的二叉树是单向的，所以我们是判断当前结点的子结点是否需要删除结点，而不能去判断当前这个结点是不是需要删除结点.</span></span><br><span class="line"><span class="comment">	2. 如果当前结点的左子结点不为空，并且左子结点 就是要删除结点，就将this.left = null; 并且就返回(结束递归删除)</span></span><br><span class="line"><span class="comment">	3. 如果当前结点的右子结点不为空，并且右子结点 就是要删除结点，就将this.right= null ;并且就返回(结束递归删除)</span></span><br><span class="line"><span class="comment">	4. 如果第2和第3步没有删除结点，那么我们就需要向左子树进行递归删除</span></span><br><span class="line"><span class="comment">	5.  如果第4步也没有删除结点，则应当向右子树进行递归删除.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">      <span class="comment">//2. 如果当前结点的左子结点不为空，并且左子结点 就是要删除结点，就将this.left = null; 并且就返回(结束递归删除)</span></span><br><span class="line">      <span class="keyword">if</span>(<span class="keyword">this</span>.left != <span class="keyword">null</span> &amp;&amp; <span class="keyword">this</span>.left.no == no) &#123;</span><br><span class="line">          <span class="keyword">this</span>.left = <span class="keyword">null</span>;</span><br><span class="line">          <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">//3.如果当前结点的右子结点不为空，并且右子结点 就是要删除结点，就将this.right= null ;并且就返回(结束递归删除)</span></span><br><span class="line">      <span class="keyword">if</span>(<span class="keyword">this</span>.right != <span class="keyword">null</span> &amp;&amp; <span class="keyword">this</span>.right.no == no) &#123;</span><br><span class="line">          <span class="keyword">this</span>.right = <span class="keyword">null</span>;</span><br><span class="line">          <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">//4.我们就需要向左子树进行递归删除</span></span><br><span class="line">      <span class="keyword">if</span>(<span class="keyword">this</span>.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">          <span class="keyword">this</span>.left.delNode(no);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">//5.则应当向右子树进行递归删除</span></span><br><span class="line">      <span class="keyword">if</span>(<span class="keyword">this</span>.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">          <span class="keyword">this</span>.right.delNode(no);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="2、-顺序存储二叉树"><a href="#2、-顺序存储二叉树" class="headerlink" title="2、 顺序存储二叉树"></a>2、 顺序存储二叉树</h1><h2 id="2-1-顺序存储二叉树的概念"><a href="#2-1-顺序存储二叉树的概念" class="headerlink" title="2.1 顺序存储二叉树的概念"></a>2.1 顺序存储二叉树的概念</h2><p><strong>顺序存储二叉树的特点:</strong></p>
+<ol>
+<li>顺序二叉树通常只考虑完全二叉树</li>
+<li>第n个元素的左子节点为 2 * n + 1 </li>
+<li>第n个元素的右子节点为 2 * n + 2</li>
+<li>第n个元素的父节点为 (n-1) / 2</li>
+<li>n : 表示二叉树中的第几个元素</li>
+</ol>
+<h2 id="2-2-递归添加二叉树节点"><a href="#2-2-递归添加二叉树节点" class="headerlink" title="2.2 递归添加二叉树节点"></a>2.2 递归添加二叉树节点</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//添加结点的方法</span></span><br><span class="line">    <span class="comment">//递归的形式添加结点，注意需要满足二叉排序树的要求</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(Node node)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (node == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//判断传入的结点的值，和当前子树的根结点的值关系</span></span><br><span class="line">        <span class="keyword">if</span> (node.value &lt; <span class="keyword">this</span>.value)&#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.left == <span class="keyword">null</span>)&#123;</span><br><span class="line">                <span class="keyword">this</span>.left = node;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">this</span>.left.add(node);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.right == <span class="keyword">null</span>)&#123;</span><br><span class="line">                <span class="keyword">this</span>.right = node;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">this</span>.right.add(node);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-3-顺序存储二叉树的前序遍历"><a href="#2-3-顺序存储二叉树的前序遍历" class="headerlink" title="2.3 顺序存储二叉树的前序遍历"></a>2.3 顺序存储二叉树的前序遍历</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//编写一个方法，完成顺序存储二叉树的前序遍历</span></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> index 数组的下标 </span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">preOrder</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//如果数组为空，或者 arr.length = 0</span></span><br><span class="line">		<span class="keyword">if</span>(arr == <span class="keyword">null</span> || arr.length == <span class="number">0</span>) &#123;</span><br><span class="line">			System.out.println(<span class="string">"数组为空，不能按照二叉树的前序遍历"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//输出当前这个元素</span></span><br><span class="line">		System.out.println(arr[index]); </span><br><span class="line">		<span class="comment">//向左递归遍历</span></span><br><span class="line">		<span class="keyword">if</span>((index * <span class="number">2</span> + <span class="number">1</span>) &lt; arr.length) &#123;</span><br><span class="line">			preOrder(<span class="number">2</span> * index + <span class="number">1</span> );</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//向右递归遍历</span></span><br><span class="line">		<span class="keyword">if</span>((index * <span class="number">2</span> + <span class="number">2</span>) &lt; arr.length) &#123;</span><br><span class="line">			preOrder(<span class="number">2</span> * index + <span class="number">2</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="3、-赫夫曼树"><a href="#3、-赫夫曼树" class="headerlink" title="3、 赫夫曼树"></a>3、 赫夫曼树</h1><h2 id="3-1-基本介绍"><a href="#3-1-基本介绍" class="headerlink" title="3.1 基本介绍"></a>3.1 基本介绍</h2><ol>
+<li><strong>给定n个权值作为n个叶子结点，构造一棵二叉树，若该树的带权路径长度(wpl)达到最小，称这样的二叉树为最优二叉树，也称为哈夫曼树(Huffman Tree), 还有的书翻译为霍夫曼树。</strong></li>
+<li><strong>赫夫曼树是带权路径长度最短的树，权值较大的结点离根较近。</strong></li>
+</ol>
+<h2 id="3-2-赫夫曼树几个重要概念"><a href="#3-2-赫夫曼树几个重要概念" class="headerlink" title="3.2 赫夫曼树几个重要概念"></a>3.2 赫夫曼树几个重要概念</h2><ol>
+<li><strong>路径和路径长度：在一棵树中，从一个结点往下可以达到的孩子或孙子结点之间的通路，称为路径。通路中分支的数目称为路径长度。若规定根结点的层数为1，则从根结点到第L层结点的路径长度为L-1</strong></li>
+<li><strong>结点的权及带权路径长度：若将树中结点赋给一个有着某种含义的数值，则这个数值称为该结点的权。结点的带权路径长度为：从根结点到该结点之间的路径长度与该结点的权的乘积</strong></li>
+<li><strong>树的带权路径长度：树的带权路径长度规定为所有叶子结点的带权路径长度之和，记为WPL(weighted path length) ,权值越大的结点离根结点越近的二叉树才是最优二叉树</strong></li>
+<li><strong>WPL最小的就是赫夫曼树</strong></li>
+</ol>
+<p><strong>总而言之—-WPL最小的就是赫夫曼树，WPL：树的带权路径长度规定为所有叶子结点的带权路径长度之和</strong></p>
+<h2 id="3-3赫夫曼树代码实现"><a href="#3-3赫夫曼树代码实现" class="headerlink" title="3.3赫夫曼树代码实现"></a>3.3赫夫曼树代码实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">// 创建赫夫曼树的方法</span></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> arr 需要创建成哈夫曼树的数组</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 创建好后的赫夫曼树的root结点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Node <span class="title">huofumanSearch</span><span class="params">(<span class="keyword">int</span>[] arr)</span></span>&#123;</span><br><span class="line">        <span class="comment">// 第一步为了操作方便</span></span><br><span class="line">        <span class="comment">// 1. 遍历 arr 数组</span></span><br><span class="line">        <span class="comment">// 2. 将arr的每个元素构成成一个Node</span></span><br><span class="line">        <span class="comment">// 3. 将Node 放入到ArrayList中</span></span><br><span class="line">        List&lt;Node&gt; nodes = <span class="keyword">new</span> ArrayList&lt;Node&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> value : arr) &#123;</span><br><span class="line">            nodes.add(<span class="keyword">new</span> Node(value));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//我们处理的过程是一个循环的过程</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(nodes.size() &gt; <span class="number">1</span>) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//排序 从小到大</span></span><br><span class="line">            Collections.sort(nodes);</span><br><span class="line"></span><br><span class="line">            System.out.println(<span class="string">"nodes ="</span> + nodes);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//取出根节点权值最小的两颗二叉树</span></span><br><span class="line">            <span class="comment">//(1) 取出权值最小的结点（二叉树）</span></span><br><span class="line">            Node leftNode = nodes.get(<span class="number">0</span>);</span><br><span class="line">            <span class="comment">//(2) 取出权值第二小的结点（二叉树）</span></span><br><span class="line">            Node rightNode = nodes.get(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//(3)构建一颗新的二叉树</span></span><br><span class="line">            Node parent = <span class="keyword">new</span> Node(leftNode.value + rightNode.value);</span><br><span class="line">            parent.left = leftNode;</span><br><span class="line">            parent.right = rightNode;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//(4)从ArrayList删除处理过的二叉树</span></span><br><span class="line">            nodes.remove(leftNode);</span><br><span class="line">            nodes.remove(rightNode);</span><br><span class="line">            <span class="comment">//(5)将parent加入到nodes</span></span><br><span class="line">            nodes.add(parent);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//返回哈夫曼树的root结点</span></span><br><span class="line">        <span class="keyword">return</span> nodes.get(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="4、二叉排序树"><a href="#4、二叉排序树" class="headerlink" title="4、二叉排序树"></a>4、二叉排序树</h1><ul>
+<li><strong>使用数组</strong></li>
+</ul>
+<ol>
+<li><strong>数组未排序， 优点：直接在数组尾添加，速度快。 缺点：查找速度慢</strong></li>
+<li><strong>数组排序，优点：可以使用二分查找，查找速度快，缺点：为了保证数组有序，在添加新数据时，找到插入位置后，后面的数据需整体移动，速度慢。[示意图]</strong></li>
+</ol>
+<ul>
+<li><strong>使用链式存储-链表不管链表是否有序，查找速度都慢，添加数据速度比数组快，不需要数据整体移动。</strong></li>
+</ul>
+<ul>
+<li><strong>使用二叉排序树</strong></li>
+</ul>
+<h2 id="4-1-二叉排序树介绍"><a href="#4-1-二叉排序树介绍" class="headerlink" title="4.1 二叉排序树介绍"></a>4.1 二叉排序树介绍</h2><p><strong>二叉排序树：BST: (Binary Sort(Search) Tree), 对于二叉排序树的任何一个非叶子节点，要求左子节点的值比当前节点的值小，右子节点的值比当前节点的值大。</strong><br><strong>特别说明：如果有相同的值，可以将该节点放在左子节点或右子节点</strong></p>
+<h2 id="4-2-二叉排序树的创建和遍历"><a href="#4-2-二叉排序树的创建和遍历" class="headerlink" title="4.2 二叉排序树的创建和遍历"></a>4.2 二叉排序树的创建和遍历</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//添加结点的方法</span></span><br><span class="line"><span class="comment">//递归的形式添加结点，注意需要满足二叉排序树的要求</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(Node node)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(node == <span class="keyword">null</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//判断传入的结点的值，和当前子树的根结点的值关系</span></span><br><span class="line">	<span class="keyword">if</span>(node.value &lt; <span class="keyword">this</span>.value) &#123;</span><br><span class="line">		<span class="comment">//如果当前结点左子结点为null</span></span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">this</span>.left == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">this</span>.left = node;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="comment">//递归的向左子树添加</span></span><br><span class="line">			<span class="keyword">this</span>.left.add(node);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123; <span class="comment">//添加的结点的值大于 当前结点的值</span></span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">this</span>.right == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">this</span>.right = node;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="comment">//递归的向右子树添加</span></span><br><span class="line">			<span class="keyword">this</span>.right.add(node);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//中序遍历</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">infixOrder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">this</span>.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">		<span class="keyword">this</span>.left.infixOrder();</span><br><span class="line">	&#125;</span><br><span class="line">	System.out.println(<span class="keyword">this</span>);</span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">this</span>.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">		<span class="keyword">this</span>.right.infixOrder();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-3-二叉排序树的删除"><a href="#4-3-二叉排序树的删除" class="headerlink" title="4.3 二叉排序树的删除"></a>4.3 二叉排序树的删除</h2><p><strong>二叉排序树的删除情况比较复杂，有下面三种情况需要考虑</strong></p>
+<ol>
+<li><strong>删除叶子节点</strong></li>
+<li><strong>删除只有一颗子树的节点</strong></li>
+<li><strong>删除有两颗子树的节点.</strong></li>
+</ol>
+<p><strong>代码实现</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//删除结点</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delNode</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="comment">//1.需求先去找到要删除的结点  targetNode</span></span><br><span class="line">		Node targetNode = search(value);</span><br><span class="line">		<span class="comment">//如果没有找到要删除的结点</span></span><br><span class="line">		<span class="keyword">if</span>(targetNode == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//如果我们发现当前这颗二叉排序树只有一个结点</span></span><br><span class="line">		<span class="keyword">if</span>(root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span>) &#123;</span><br><span class="line">			root = <span class="keyword">null</span>;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//去找到targetNode的父结点</span></span><br><span class="line">		Node parent = searchParent(value);</span><br><span class="line">		<span class="comment">//如果要删除的结点是叶子结点</span></span><br><span class="line">		<span class="keyword">if</span>(targetNode.left == <span class="keyword">null</span> &amp;&amp; targetNode.right == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="comment">//判断targetNode 是父结点的左子结点，还是右子结点</span></span><br><span class="line">			<span class="keyword">if</span>(parent.left != <span class="keyword">null</span> &amp;&amp; parent.left.value == value) &#123; <span class="comment">//是左子结点</span></span><br><span class="line">				parent.left = <span class="keyword">null</span>;</span><br><span class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> (parent.right != <span class="keyword">null</span> &amp;&amp; parent.right.value == value) &#123;<span class="comment">//是由子结点</span></span><br><span class="line">				parent.right = <span class="keyword">null</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (targetNode.left != <span class="keyword">null</span> &amp;&amp; targetNode.right != <span class="keyword">null</span>) &#123; <span class="comment">//删除有两颗子树的节点</span></span><br><span class="line">			<span class="keyword">int</span> minVal = delRightTreeMin(targetNode.right);</span><br><span class="line">			targetNode.value = minVal;</span><br><span class="line">			</span><br><span class="line">			</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123; <span class="comment">// 删除只有一颗子树的结点</span></span><br><span class="line">			<span class="comment">//如果要删除的结点有左子结点 </span></span><br><span class="line">			<span class="keyword">if</span>(targetNode.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">				<span class="keyword">if</span>(parent != <span class="keyword">null</span>) &#123;</span><br><span class="line">					<span class="comment">//如果 targetNode 是 parent 的左子结点</span></span><br><span class="line">					<span class="keyword">if</span>(parent.left.value == value) &#123;</span><br><span class="line">						parent.left = targetNode.left;</span><br><span class="line">					&#125; <span class="keyword">else</span> &#123; <span class="comment">//  targetNode 是 parent 的右子结点</span></span><br><span class="line">						parent.right = targetNode.left;</span><br><span class="line">					&#125; </span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					root = targetNode.left;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123; <span class="comment">//如果要删除的结点有右子结点 </span></span><br><span class="line">				<span class="keyword">if</span>(parent != <span class="keyword">null</span>) &#123;</span><br><span class="line">					<span class="comment">//如果 targetNode 是 parent 的左子结点</span></span><br><span class="line">					<span class="keyword">if</span>(parent.left.value == value) &#123;</span><br><span class="line">						parent.left = targetNode.right;</span><br><span class="line">					&#125; <span class="keyword">else</span> &#123; <span class="comment">//如果 targetNode 是 parent 的右子结点</span></span><br><span class="line">						parent.right = targetNode.right;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					root = targetNode.right;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="5、-平衡二叉树（AVL树）"><a href="#5、-平衡二叉树（AVL树）" class="headerlink" title="5、 平衡二叉树（AVL树）"></a>5、 平衡二叉树（AVL树）</h1><h2 id="5-1-基本介绍"><a href="#5-1-基本介绍" class="headerlink" title="5.1 基本介绍"></a>5.1 基本介绍</h2><ol>
+<li><strong>平衡二叉树也叫平衡二叉搜索树（Self-balancing binary search tree）又被称为AVL树， 可以保证查询效率较高。</strong></li>
+<li><strong>具有以下特点：它是一 棵空树或它的左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树。平衡二叉树的常用实现方法有红黑树、AVL、替罪羊树、Treap、伸展树等。</strong></li>
+</ol>
+<h2 id="5-2-平衡二叉树左旋转"><a href="#5-2-平衡二叉树左旋转" class="headerlink" title="5.2 平衡二叉树左旋转"></a>5.2 平衡二叉树左旋转</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//左旋转方法</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">leftRotate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//创建新的结点，以当前根结点的值</span></span><br><span class="line">	Node newNode = <span class="keyword">new</span> Node(value);</span><br><span class="line">	<span class="comment">//把新的结点的左子树设置成当前结点的左子树</span></span><br><span class="line">	newNode.left = left;</span><br><span class="line">	<span class="comment">//把新的结点的右子树设置成带你过去结点的右子树的左子树</span></span><br><span class="line">	newNode.right = right.left;</span><br><span class="line">	<span class="comment">//把当前结点的值替换成右子结点的值</span></span><br><span class="line">	value = right.value;</span><br><span class="line">	<span class="comment">//把当前结点的右子树设置成当前结点右子树的右子树</span></span><br><span class="line">	right = right.right;</span><br><span class="line">	<span class="comment">//把当前结点的左子树(左子结点)设置成新的结点</span></span><br><span class="line">	left = newNode;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-3-平衡二叉树右旋转"><a href="#5-3-平衡二叉树右旋转" class="headerlink" title="5.3 平衡二叉树右旋转"></a>5.3 平衡二叉树右旋转</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//右旋转</span></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">rightRotate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		Node newNode = <span class="keyword">new</span> Node(value);</span><br><span class="line">		newNode.right = right;</span><br><span class="line">		newNode.left = left.right;</span><br><span class="line">		value = left.value;</span><br><span class="line">		left = left.left;</span><br><span class="line">		right = newNode;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-4-平衡二叉树左右双旋转"><a href="#5-4-平衡二叉树左右双旋转" class="headerlink" title="5.4 平衡二叉树左右双旋转"></a>5.4 平衡二叉树左右双旋转</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//当添加完一个结点后，如果: (右子树的高度-左子树的高度) &gt; 1 , 左旋转</span></span><br><span class="line">		<span class="keyword">if</span>(rightHeight() - leftHeight() &gt; <span class="number">1</span>) &#123;</span><br><span class="line">			<span class="comment">//如果它的右子树的左子树的高度大于它的右子树的右子树的高度</span></span><br><span class="line">			<span class="keyword">if</span>(right != <span class="keyword">null</span> &amp;&amp; right.leftHeight() &gt; right.rightHeight()) &#123;</span><br><span class="line">				<span class="comment">//先对右子结点进行右旋转</span></span><br><span class="line">				right.rightRotate();</span><br><span class="line">				<span class="comment">//然后在对当前结点进行左旋转</span></span><br><span class="line">				leftRotate(); <span class="comment">//左旋转..</span></span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="comment">//直接进行左旋转即可</span></span><br><span class="line">				leftRotate();</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> ; <span class="comment">//必须要!!!</span></span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//当添加完一个结点后，如果 (左子树的高度 - 右子树的高度) &gt; 1, 右旋转</span></span><br><span class="line">		<span class="keyword">if</span>(leftHeight() - rightHeight() &gt; <span class="number">1</span>) &#123;</span><br><span class="line">			<span class="comment">//如果它的左子树的右子树高度大于它的左子树的高度</span></span><br><span class="line">			<span class="keyword">if</span>(left != <span class="keyword">null</span> &amp;&amp; left.rightHeight() &gt; left.leftHeight()) &#123;</span><br><span class="line">				<span class="comment">//先对当前结点的左结点(左子树)-&gt;左旋转</span></span><br><span class="line">				left.leftRotate();</span><br><span class="line">				<span class="comment">//再对当前结点进行右旋转</span></span><br><span class="line">				rightRotate();</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="comment">//直接进行右旋转即可</span></span><br><span class="line">				rightRotate();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="6、二叉树与B树，B-树，B-树"><a href="#6、二叉树与B树，B-树，B-树" class="headerlink" title="6、二叉树与B树，B+树，B*树"></a>6、二叉树与B树，B+树，B*树</h1><h2 id="6-1-B树的基本介绍"><a href="#6-1-B树的基本介绍" class="headerlink" title="6.1 B树的基本介绍"></a>6.1 B树的基本介绍</h2><p><strong>B树通过重新组织节点，降低树的高度，并且减少i/o读写次数来提升效率。</strong></p>
+<ol>
+<li><strong>如图B树通过重新组织节点， 降低了树的高度.</strong></li>
+<li><strong>文件系统及数据库系统的设计者利用了磁盘预读原理，将一个节点的大小设为等于一个页(页得大小通常为4k)，这样每个节点只需要一次I/O就可以完全载入</strong></li>
+<li><strong>将树的度M设置为1024，在600亿个元素中最多只需要4次I/O操作就可以读取到想要的元素, B树(B+)广泛应用于文件存储系统以及数据库系统中</strong></li>
+</ol>
+<h2 id="6-2-2-3树-基本介绍"><a href="#6-2-2-3树-基本介绍" class="headerlink" title="6.2   2-3树 基本介绍"></a>6.2   2-3树 基本介绍</h2><p><strong>2-3树是最简单的B树结构, 具有如下特点:</strong></p>
+<ol>
+<li><strong>2-3树的所有叶子节点都在同一层.(只要是B树都满足这个条件)</strong></li>
+<li><strong>有两个子节点的节点叫二节点，二节点要么没有子节点，要么有两个子节点.</strong></li>
+<li><strong>有三个子节点的节点叫三节点，三节点要么没有子节点，要么有三个子节点.</strong></li>
+<li><strong>2-3树是由二节点和三节点构成的树。</strong></li>
+</ol>
+<h2 id="6-3-B树说明"><a href="#6-3-B树说明" class="headerlink" title="6.3 B树说明"></a>6.3 B树说明</h2><ol>
+<li><strong>B树的阶：节点的最多子节点个数。比如2-3树的阶是3，2-3-4树的阶是4</strong></li>
+<li><strong>B-树的搜索，从根结点开始，对结点内的关键字（有序）序列进行二分查找，如果命中则结束，否则进入查询关键字所属范围的儿子结点；重复，直到所对应的儿子指针为空，或已经是叶子结点</strong></li>
+<li><strong>关键字集合分布在整颗树中, 即叶子节点和非叶子节点都存放数据.</strong></li>
+<li><strong>搜索有可能在非叶子结点结束</strong></li>
+<li><strong>其搜索性能等价于在关键字全集内做一次二分查找</strong></li>
+</ol>
+<h2 id="6-4-B-树的介绍说明"><a href="#6-4-B-树的介绍说明" class="headerlink" title="6.4 B+树的介绍说明"></a>6.4 B+树的介绍说明</h2><p><strong>B+树是B树的变体，也是一种多路搜索树。</strong></p>
+<ol>
+<li><strong>B+树的搜索与B树也基本相同，区别是B+树只有达到叶子结点才命中（B树可以在非叶子结点命中），其性能也等价于在关键字全集做一次二分查找</strong></li>
+<li><strong>所有关键字都出现在叶子结点的链表中（即数据只能在叶子节点【也叫稠密索引】），且链表中的关键字(数据)恰好是有序的。</strong></li>
+<li><strong>不可能在非叶子结点命中</strong></li>
+<li><strong>非叶子结点相当于是叶子结点的索引（稀疏索引），叶子结点相当于是存储（关键字）数据的数据层</strong></li>
+<li><strong>更适合文件索引系统</strong></li>
+<li><strong>B树和B+树各有自己的应用场景，不能说B+树完全比B树好，反之亦然.</strong></li>
+</ol>
+<h2 id="6-5-B-树的介绍"><a href="#6-5-B-树的介绍" class="headerlink" title="6.5 B*树的介绍"></a>6.5 B*树的介绍</h2><p><strong>B*树是B+树的变体，在B+树的非根和非叶子结点再增加指向兄弟的指针。</strong></p>
+<ol>
+<li><strong>B<em>树定义了非叶子结点关键字个数至少为(2/3)</em>M，即块的最低使用率为2/3，而B+树的块的最低使用率为B+树的1/2。</strong></li>
+<li><strong>从第1个特点我们可以看出，B*树分配新结点的概率比B+树要低，空间使用率更高</strong></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+	<div>
+	  
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+	  
+	</div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Liu JT
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2020/03/24/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%91/" title="数据结构----树">http://yoursite.com/2020/03/24/数据结构-树/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"><i class="fa fa-tag"></i># 数据结构</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/22/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E9%87%8D%E5%86%99hashcode%E5%92%8Cequalsd%E6%96%B9%E6%B3%95/" rel="prev" title="为什么要重写hashcode和equals方法">
+      <i class="fa fa-chevron-left"></i> 为什么要重写hashcode和equals方法
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1、二叉树"><span class="nav-text">1、二叉树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-为什么需要树这种结构"><span class="nav-text">1.1 为什么需要树这种结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-二叉树的概念"><span class="nav-text">1.2 二叉树的概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-使用前序中序后序遍历二叉树"><span class="nav-text">1.3 使用前序中序后序遍历二叉树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-分别使用前序中序后序查找二叉树"><span class="nav-text">1.4 分别使用前序中序后序查找二叉树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-二叉树-删除节点"><span class="nav-text">1.5 二叉树-删除节点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、-顺序存储二叉树"><span class="nav-text">2、 顺序存储二叉树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-顺序存储二叉树的概念"><span class="nav-text">2.1 顺序存储二叉树的概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-递归添加二叉树节点"><span class="nav-text">2.2 递归添加二叉树节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-顺序存储二叉树的前序遍历"><span class="nav-text">2.3 顺序存储二叉树的前序遍历</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3、-赫夫曼树"><span class="nav-text">3、 赫夫曼树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-基本介绍"><span class="nav-text">3.1 基本介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-赫夫曼树几个重要概念"><span class="nav-text">3.2 赫夫曼树几个重要概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3赫夫曼树代码实现"><span class="nav-text">3.3赫夫曼树代码实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4、二叉排序树"><span class="nav-text">4、二叉排序树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-二叉排序树介绍"><span class="nav-text">4.1 二叉排序树介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-二叉排序树的创建和遍历"><span class="nav-text">4.2 二叉排序树的创建和遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-二叉排序树的删除"><span class="nav-text">4.3 二叉排序树的删除</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5、-平衡二叉树（AVL树）"><span class="nav-text">5、 平衡二叉树（AVL树）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-基本介绍"><span class="nav-text">5.1 基本介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-平衡二叉树左旋转"><span class="nav-text">5.2 平衡二叉树左旋转</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-平衡二叉树右旋转"><span class="nav-text">5.3 平衡二叉树右旋转</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-平衡二叉树左右双旋转"><span class="nav-text">5.4 平衡二叉树左右双旋转</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6、二叉树与B树，B-树，B-树"><span class="nav-text">6、二叉树与B树，B+树，B*树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-B树的基本介绍"><span class="nav-text">6.1 B树的基本介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-2-3树-基本介绍"><span class="nav-text">6.2   2-3树 基本介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-B树说明"><span class="nav-text">6.3 B树说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-4-B-树的介绍说明"><span class="nav-text">6.4 B+树的介绍说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-5-B-树的介绍"><span class="nav-text">6.5 B*树的介绍</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu JT"
+      src="/images/author.jpg">
+  <p class="site-author-name" itemprop="name">Liu JT</p>
+  <div class="site-description" itemprop="description">小人物，普通人</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lxtbiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lxtbiu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/lxtbiu123@gmail.com" title="E-Mail → lxtbiu123@gmail.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i>RSS</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">柳小涛</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">104k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:34</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
+

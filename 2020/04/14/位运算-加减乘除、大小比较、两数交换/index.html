@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: './public/search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="前言 本篇博客介绍了如何用二进制位运算来进行加减乘除，交换，比大小等。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="位运算--加减乘除、大小比较、两数交换">
+<meta property="og:url" content="http://yoursite.com/2020/04/14/%E4%BD%8D%E8%BF%90%E7%AE%97-%E5%8A%A0%E5%87%8F%E4%B9%98%E9%99%A4%E3%80%81%E5%A4%A7%E5%B0%8F%E6%AF%94%E8%BE%83%E3%80%81%E4%B8%A4%E6%95%B0%E4%BA%A4%E6%8D%A2/index.html">
+<meta property="og:site_name" content="孤独患者">
+<meta property="og:description" content="前言 本篇博客介绍了如何用二进制位运算来进行加减乘除，交换，比大小等。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-14T10:34:18.000Z">
+<meta property="article:modified_time" content="2020-04-14T10:50:14.854Z">
+<meta property="article:author" content="Liu JT">
+<meta property="article:tag" content="位运算">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/04/14/%E4%BD%8D%E8%BF%90%E7%AE%97-%E5%8A%A0%E5%87%8F%E4%B9%98%E9%99%A4%E3%80%81%E5%A4%A7%E5%B0%8F%E6%AF%94%E8%BE%83%E3%80%81%E4%B8%A4%E6%95%B0%E4%BA%A4%E6%8D%A2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>位运算--加减乘除、大小比较、两数交换 | 孤独患者</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="孤独患者" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">孤独患者</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">成為一個厲害的普通人</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">9</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">12</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">17</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/lxtbiu" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/14/%E4%BD%8D%E8%BF%90%E7%AE%97-%E5%8A%A0%E5%87%8F%E4%B9%98%E9%99%A4%E3%80%81%E5%A4%A7%E5%B0%8F%E6%AF%94%E8%BE%83%E3%80%81%E4%B8%A4%E6%95%B0%E4%BA%A4%E6%8D%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.jpg">
+      <meta itemprop="name" content="Liu JT">
+      <meta itemprop="description" content="小人物，普通人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="孤独患者">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          位运算--加减乘除、大小比较、两数交换
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-04-14 18:34:18 / 修改时间：18:50:14" itemprop="dateCreated datePublished" datetime="2020-04-14T18:34:18+08:00">2020-04-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BD%8D%E8%BF%90%E7%AE%97/" itemprop="url" rel="index">
+                    <span itemprop="name">位运算</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p> 本篇博客介绍了如何用二进制位运算来进行加减乘除，交换，比大小等。</p>
+<a id="more"></a>
+
+<h1 id="1-位运算—加法"><a href="#1-位运算—加法" class="headerlink" title="1. 位运算—加法"></a>1. 位运算—加法</h1><p><strong>举个例子</strong>：</p>
+<p>8+9=17，可以转换成10+7，即：二者相加不考虑进位的值，和二者相加只考虑进位的值相加。我们再通过二进制来直观的看一下。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0000</span> <span class="number">1000</span> (<span class="number">8</span>)</span><br><span class="line"><span class="number">0000</span> <span class="number">1001</span> (<span class="number">9</span>)</span><br><span class="line"><span class="number">0001</span> <span class="number">0001</span> (<span class="number">17</span>)</span><br></pre></td></tr></table></figure>
+
+<p> <strong>思路：</strong></p>
+<p>首先我们看，直接二进制相加的结果，0+0=0,1+0=1,1+1=10。好像能看出点什么。<strong>前两个的运算规则复合“异或运算”，而后者则复合与运算并左移1位。</strong></p>
+<p>到现在思路就清楚了：a^b的结果是不考虑进位的结果，而a&amp;b&lt;&lt;1是只考虑进位的结果。把二者相加即可。如果相加后，可能还存在进位，那就让这两个数字继续相加，一直到进位为0为止。这里使用递归去实现，感兴趣的可以用循环实现，性能比递归要高。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">       <span class="comment">// 得到原位和</span></span><br><span class="line">       <span class="keyword">int</span> xor = a ^ b;</span><br><span class="line">       <span class="comment">// 得到进位和</span></span><br><span class="line">       <span class="keyword">int</span> forWoad = (a &amp; b) &lt;&lt; <span class="number">1</span>;</span><br><span class="line">       <span class="keyword">return</span> forWoad == <span class="number">0</span> ? xor : add(xor, forWoad);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-位运算—取负数"><a href="#2-位运算—取负数" class="headerlink" title="2. 位运算—取负数"></a>2. 位运算—取负数</h1><p>计算机中的负数实现，是将正数按位取反获取反码，之后+1获得补码，这个结果就是某个正数所对应的负数。 </p>
+<p> 负数的实现其实还是比较简单的，按位取反之后+1即可 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">negative</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> add(~num, <span class="number">1</span>);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-位运算—减法"><a href="#3-位运算—减法" class="headerlink" title="3. 位运算—减法"></a>3. 位运算—减法</h1><p>实现了负数之后，我们第一步实现的加法就可以和负数进行运算了，而减法也就变得简单起来。</p>
+<p>减法的实现如4-2等价于4+(-2)，我们直接使用加法和负数就可以实现。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minus</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> add(a, negative(b));</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="4-位运算—绝对值"><a href="#4-位运算—绝对值" class="headerlink" title="4. 位运算—绝对值"></a>4. 位运算—绝对值</h1><p>接下来要实现乘法和除法。乘法和除法可能会有正数和负数相互计算的情况，因此我们实现乘除之前，需要先实现绝对值计算的功能，将运算数字转换成绝对值进行乘除，之后判断是否需要加上负号即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">abs</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (num &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        num = minus(<span class="number">0</span>, num);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> num;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="5-位运算—乘法"><a href="#5-位运算—乘法" class="headerlink" title="5. 位运算—乘法"></a>5. 位运算—乘法</h1><p>乘法的实现，如11*10，乘法的流程如下面所示。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0000</span> <span class="number">1011</span> （<span class="number">11</span>）</span><br><span class="line"><span class="number">0000</span> <span class="number">1010</span> （<span class="number">10</span>）</span><br><span class="line">================</span><br><span class="line"><span class="number">0001</span> <span class="number">0110</span> （<span class="number">1011</span>&lt;&lt;<span class="number">1</span>，相当于乘以<span class="number">0010</span>）</span><br><span class="line"><span class="number">0101</span> <span class="number">1000</span> （<span class="number">1011</span>&lt;&lt;<span class="number">3</span>，相当于乘以<span class="number">1000</span>）</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，二进制乘法的原理是：从乘数的低位到高位，遇到1并且这个1在乘数的右边起第i（i从0开始）位，那么就把被乘数左移i位得到temp_i，直到乘数中的1遍历完毕后，把根据各位1而得到的被乘数的左移值全部相加即得到乘法结果。</p>
+<p>而至于存在负数的运算，可以先获取负数的个数，再将两个数字转换成绝对值计算，最后判断当负数是1个时，计算结果就是负数，其他情况则是正数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">multi</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 先获取负数的个数</span></span><br><span class="line">    <span class="keyword">int</span> negativeCount = negativeCount(a, b);</span><br><span class="line">    <span class="comment">// 负数转正数进行计算</span></span><br><span class="line">    a = abs(a);</span><br><span class="line">    b = abs(b);</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 乘数为0则结束</span></span><br><span class="line">    <span class="keyword">while</span> (b != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// 处理乘数当前位</span></span><br><span class="line">        <span class="keyword">if</span> ((b &amp; <span class="number">1</span>) == <span class="number">1</span>) &#123;</span><br><span class="line">            res = add(res, a &lt;&lt; i);</span><br><span class="line">        &#125;</span><br><span class="line">        b = b &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        i = add(i, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (negativeCount == <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="comment">// 转为负数</span></span><br><span class="line">        res = negative(res);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>negativeCount方法</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">negativeCount</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (a &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        count = add(count, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (b &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        count = add(count, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>乘法事实上有个简单的实现。乘法就是个连加的过程，如5*4就是4个5相加，这个虽然性能比较低，但是操作起来简单</p>
+<h1 id="6-位运算—除法"><a href="#6-位运算—除法" class="headerlink" title="6. 位运算—除法"></a>6. 位运算—除法</h1><p>除法没有什么简单的二进制实现方案，实际计算机中的除法也是通过连减去计算的。a/b的意义就是求a可以由多少个b组成，因此除法可以求a能减去多少个b。至于负数的情况，和乘法相同，不再介绍。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sub</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 先获取负数的个数</span></span><br><span class="line">    <span class="keyword">int</span> negativeCount = negativeCount(a, b);</span><br><span class="line">    <span class="comment">// 负数转正数进行计算</span></span><br><span class="line">    a = abs(a);</span><br><span class="line">    b = abs(b);</span><br><span class="line">    <span class="keyword">int</span> res;</span><br><span class="line">    <span class="keyword">if</span> (a &lt; b) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res = add(sub(minus(a, b), b), <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (negativeCount == <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="comment">// 转为负数</span></span><br><span class="line">        res = negative(res);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="7-位运算—取模"><a href="#7-位运算—取模" class="headerlink" title="7. 位运算—取模"></a>7. 位运算—取模</h1><p>取模<br>取模运算的思路和除法一样，也是个连减的过程，一直减到我们减不了为止，剩下的值就是我们要的结果。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">mode</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 先获取负数的个数</span></span><br><span class="line">    <span class="keyword">int</span> negativeCount = negativeCount(a, b);</span><br><span class="line">    <span class="comment">// 负数转正数进行计算</span></span><br><span class="line">    a = abs(a);</span><br><span class="line">    b = abs(b);</span><br><span class="line">    <span class="keyword">int</span> res;</span><br><span class="line">    <span class="keyword">if</span> (a &lt; b) &#123;</span><br><span class="line">        res = a;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res = sub(minus(a, b), b);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (negativeCount == <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="comment">// 转为负数</span></span><br><span class="line">        res = negative(res);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="8-位运算—两数交换"><a href="#8-位运算—两数交换" class="headerlink" title="8. 位运算—两数交换"></a>8. 位运算—两数交换</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = a^b;</span><br><span class="line">b = a^b;</span><br><span class="line">a = a^b;</span><br></pre></td></tr></table></figure>
+
+<h1 id="9-位运算—两数大小比较"><a href="#9-位运算—两数大小比较" class="headerlink" title="9. 位运算—两数大小比较"></a>9. 位运算—两数大小比较</h1><p>一切的运算在计算机中都是二进制，数字也是用二进制表示的，而二进制表示数字的时候，最高位是代表符号位，1是负数，0是正数，传统的int最高32位。因此我们只需要判断第32位的结果是0还是1就能判断谁大谁小。直接判断第32位肯定不现实，这里就需要使用到无符号右移运算符“&gt;&gt;&gt;”。举个简单的例子，下面这串二进制只需要无符号右移31位，就可以得到最高位的值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="number">1000</span> <span class="number">0010</span> <span class="number">1101</span> <span class="number">0100</span> <span class="number">1101</span> <span class="number">0001</span> <span class="number">0010</span> <span class="number">0011</span></span><br><span class="line">无符号右移<span class="number">31</span>位后</span><br><span class="line"><span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0000</span> <span class="number">0001</span></span><br></pre></td></tr></table></figure>
+
+<p>结果显而易见，最高位降到了最低位，其余位全部变成了0，因此，只要结果是负数，那么进行 &gt;&gt;&gt;31 之后的结果转为十进制就是1，否则为0。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">     <span class="keyword">int</span> b = <span class="number">12</span>;</span><br><span class="line">     <span class="keyword">int</span> index = (a - b) &gt;&gt;&gt; <span class="number">31</span>;</span><br></pre></td></tr></table></figure>
+
+<p>这样，我们只需要判断index即可。</p>
+<p>那么问题来了，题目要求是不允许判断，该怎么办呢？其实这里可以使用数组，下标为0的地方输出a&gt;=b，为1的地方输出a&lt;b。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">int</span> b = <span class="number">12</span>;</span><br><span class="line">        <span class="keyword">int</span> index = (a - b) &gt;&gt;&gt; <span class="number">31</span>;</span><br><span class="line">        String[] arr = &#123;<span class="string">"a&gt;=b"</span>, <span class="string">"a&lt;b"</span>&#125;;</span><br><span class="line">        System.out.println(arr[index]);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>最终代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">14</span>;</span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">12</span>;</span><br><span class="line">    <span class="keyword">int</span> diff = (a - b) &lt;&lt; <span class="number">2</span>;</span><br><span class="line">    String[] arr = &#123;<span class="string">"a=b"</span>, <span class="string">"a&gt;b"</span>, <span class="string">"a&lt;b"</span>&#125;;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        System.out.println(arr[diff]);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (ArrayIndexOutOfBoundsException e) &#123;</span><br><span class="line">        <span class="keyword">int</span> index = diff &gt;&gt;&gt; <span class="number">31</span>;</span><br><span class="line">        System.out.println(arr[index + <span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+	<div>
+	  
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+	  
+	</div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Liu JT
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2020/04/14/%E4%BD%8D%E8%BF%90%E7%AE%97-%E5%8A%A0%E5%87%8F%E4%B9%98%E9%99%A4%E3%80%81%E5%A4%A7%E5%B0%8F%E6%AF%94%E8%BE%83%E3%80%81%E4%B8%A4%E6%95%B0%E4%BA%A4%E6%8D%A2/" title="位运算--加减乘除、大小比较、两数交换">http://yoursite.com/2020/04/14/位运算-加减乘除、大小比较、两数交换/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/" rel="tag"><i class="fa fa-tag"></i># 位运算</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/24/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%91/" rel="prev" title="数据结构----树">
+      <i class="fa fa-chevron-left"></i> 数据结构----树
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-位运算—加法"><span class="nav-text">1. 位运算—加法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-位运算—取负数"><span class="nav-text">2. 位运算—取负数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-位运算—减法"><span class="nav-text">3. 位运算—减法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-位运算—绝对值"><span class="nav-text">4. 位运算—绝对值</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-位运算—乘法"><span class="nav-text">5. 位运算—乘法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-位运算—除法"><span class="nav-text">6. 位运算—除法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-位运算—取模"><span class="nav-text">7. 位运算—取模</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-位运算—两数交换"><span class="nav-text">8. 位运算—两数交换</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-位运算—两数大小比较"><span class="nav-text">9. 位运算—两数大小比较</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu JT"
+      src="/images/author.jpg">
+  <p class="site-author-name" itemprop="name">Liu JT</p>
+  <div class="site-description" itemprop="description">小人物，普通人</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lxtbiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lxtbiu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/lxtbiu123@gmail.com" title="E-Mail → lxtbiu123@gmail.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i>RSS</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">柳小涛</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">107k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:38</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
+
